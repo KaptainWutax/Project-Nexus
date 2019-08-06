@@ -9,10 +9,10 @@ public abstract class Task {
     public void tick() {
         if(tick == 0) {
             this.start();
-            return;
+        } else {
+            this.update(Time.DELTA);
         }
 
-        this.update(Time.DELTA);
         this.tick++;
     }
 

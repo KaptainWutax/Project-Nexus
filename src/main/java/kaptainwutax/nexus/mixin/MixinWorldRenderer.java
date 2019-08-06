@@ -17,19 +17,6 @@ public class MixinWorldRenderer {
 
 	@Inject(at = @At("TAIL"), method = "drawHighlightedBlockOutline")
 	public void drawHighlightedBlockOutline(Camera camera_1, HitResult hitResult_1, int int_1, CallbackInfo ci) {
-		Line test = new Line();
-		test.pos1 = new Vector3f(0, 100, 0);
-		test.pos2 = new Vector3f(5, 106, 0);
-		test.color = new Vector4f(1.0f, 0.5f, 0.3f, 1.0f);
-
-		Line test1 = new Line();
-		test1.pos1 = new Vector3f(8, 100, -3);
-		test1.pos2 = new Vector3f(5, 106, 2);
-		test1.color = new Vector4f(0.3f, 0.8f, 0.9f, 1.0f);
-
-		PathRenderer.LINES.add(test);
-		PathRenderer.LINES.add(test1);
-
 		PathRenderer.render();
 	}
 
