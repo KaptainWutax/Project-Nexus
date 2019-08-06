@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
-  "version": "${version}",
+  "id": "nexus",
+  "version": "1.0",
 
-  "name": "Example Mod",
+  "name": "Project Nexus",
   "description": "This is an example description! Tell everyone what your mod is about!",
   "authors": [
-    "Me!"
+    "KaptainWutax"
   ],
   "contact": {
     "homepage": "https://fabricmc.net/",
@@ -14,16 +14,16 @@
   },
 
   "license": "CC0-1.0",
-  "icon": "assets/modid/icon.png",
+  "icon": "assets/nexus/icon.png",
 
   "environment": "*",
   "entrypoints": {
-    "main": [
-      "net.fabricmc.example.ExampleMod"
+    "client": [
+      "kaptainwutax.nexus.Nexus"
     ]
   },
   "mixins": [
-    "modid.mixins.json"
+    "nexus.mixins.json"
   ],
 
   "depends": {
