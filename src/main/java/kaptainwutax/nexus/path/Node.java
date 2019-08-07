@@ -16,13 +16,18 @@ public class Node {
         this.pos = pos;
     }
 
+    //TODO: Fix this shit.
     @Override
     public boolean equals(Object obj) {
-        return pos.equals(obj);
+        return pos.equals(((Node)obj).getPos());
     }
 
     public BlockPos getPos() {
         return this.pos;
     }
 
+    @Override
+    public String toString() {
+        return "Node [" + pos.getX() + ", " + pos.getY() + ", " + pos.getZ() + "] with " + distance + ", " + heuristic + ", " + totalCost;
+    }
 }

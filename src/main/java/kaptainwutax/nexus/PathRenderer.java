@@ -23,7 +23,7 @@ public class PathRenderer {
         GlStateManager.disableBlend();
 
         for(Line line: LINES)drawLine(line, client.gameRenderer.getCamera().getPos());
-        LINES.clear();
+        //LINES.clear();
 
         GlStateManager.enableBlend();
         GlStateManager.enableTexture();
