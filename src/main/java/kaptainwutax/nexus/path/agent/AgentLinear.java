@@ -1,5 +1,6 @@
 package kaptainwutax.nexus.path.agent;
 
+import kaptainwutax.nexus.init.Nodes;
 import kaptainwutax.nexus.path.Node;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -31,9 +32,9 @@ public class AgentLinear extends Agent {
     }
 
     private boolean isValidPos(World world, BlockPos pos) {
-        if(!world.getBlockState(pos).isAir())return false;
-        if(!world.getBlockState(pos.up()).isAir())return false;
-        if(world.getBlockState(pos.down()).isAir())return false;
+        if(!Nodes.GO_THROUGH_BLOCKS.contains(world.getBlockState(pos).getBlock()))return false;
+        if(!Nodes.GO_THROUGH_BLOCKS.contains(world.getBlockState(pos.up()).getBlock()))return false;
+        if(!Nodes.STEP_ON_BLOCKS.contains(world.getBlockState(pos.down()).getBlock()))return false;
         return true;
     }
 

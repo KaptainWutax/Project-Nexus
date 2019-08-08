@@ -33,12 +33,10 @@ public class Pathfinding {
         if(thread != null && thread.isAlive())return;
 
         thread = new Thread(() -> {
-            System.out.print("Pathfinding...");
             Pathfinding pf = new Pathfinding();
             //BlockPos spawn = world.getSpawnPos();
             //pf.findPath(spawn, world.getTopPosition(Heightmap.Type.WORLD_SURFACE, spawn.add(60, 0, 60)));
             pf.findPath();
-            System.out.println("done!");
 
             PathRenderer.LINES.clear();
 
@@ -79,7 +77,6 @@ public class Pathfinding {
             CLOSED.add(currentNode);
 
             if(currentNode.getPos().equals(TARGET.getPos())) {
-                System.out.println("Found a path!");
                 PATH.add(currentNode);
 
                 while(currentNode.parent != null) {
@@ -93,7 +90,7 @@ public class Pathfinding {
             for(Agent agent: Agents.AGENTS) {
                 for(Node child: agent.getNodes(world, currentNode)) {
                     double pathCost = child.pathCost;
-                    double totalCost = pathCost + TARGET.getPos().getSquaredDistance(child.getPos());
+                    double totalCost = pathCost + Math.sqrt(TARGET.getPos().getSquaredDistance(child.getPos()));
 
                     if(CLOSED.contains(child))continue;
 
@@ -107,14 +104,13 @@ public class Pathfinding {
                         existingNode.parent = currentNode;
                         existingNode.pathCost = pathCost;
                         existingNode.agent = child.agent;
-                        existingNode.totalCost = existingNode.pathCost + TARGET.getPos().getSquaredDistance(existingNode.getPos());
+                        existingNode.totalCost = existingNode.pathCost + Math.sqrt(TARGET.getPos().getSquaredDistance(existingNode.getPos()));
                     }
                 }
             }
 
         }
 
-        System.out.println("No path possible.");
     }
 
     private Node getNodeWithPos(Set<Node> set, BlockPos pos) {
