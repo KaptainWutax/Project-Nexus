@@ -93,6 +93,7 @@ public class Pathfinding {
             for(Agent agent: Agents.AGENTS) {
                 for(Node child: agent.getNodes(world, currentNode)) {
                     double pathCost = child.pathCost;
+                    double totalCost = pathCost + TARGET.getPos().getSquaredDistance(child.getPos());
 
                     if(CLOSED.contains(child))continue;
 
@@ -101,8 +102,8 @@ public class Pathfinding {
                     if(!OPEN.contains(child)) {
                         OPEN.add(child);
                         child.parent = currentNode;
-                        child.totalCost = child.pathCost + TARGET.getPos().getSquaredDistance(child.getPos());
-                    } else if((existingNode = getNodeWithPos(OPEN, child.getPos())) != null && pathCost > existingNode.pathCost) {
+                        child.totalCost = totalCost;
+                    } else if((existingNode = getNodeWithPos(OPEN, child.getPos())) != null && totalCost < existingNode.totalCost) {
                         existingNode.parent = currentNode;
                         existingNode.pathCost = pathCost;
                         existingNode.agent = child.agent;

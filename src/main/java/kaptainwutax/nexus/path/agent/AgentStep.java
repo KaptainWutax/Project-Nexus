@@ -8,11 +8,11 @@ import net.minecraft.world.World;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AgentLinear extends Agent {
+public class AgentStep extends Agent {
 
     private Direction direction;
 
-    public AgentLinear(Direction direction) {
+    public AgentStep(Direction direction) {
         this.direction = direction;
     }
 
@@ -33,6 +33,7 @@ public class AgentLinear extends Agent {
     private boolean isValidPos(World world, BlockPos pos) {
         if(!world.getBlockState(pos).isAir())return false;
         if(!world.getBlockState(pos.up()).isAir())return false;
+        if(!world.getBlockState(pos.up().up()).isAir())return false;
         if(world.getBlockState(pos.down()).isAir())return false;
         return true;
     }

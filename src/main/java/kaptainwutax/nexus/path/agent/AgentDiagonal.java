@@ -1,7 +1,6 @@
 package kaptainwutax.nexus.path.agent;
 
 import kaptainwutax.nexus.path.Node;
-import kaptainwutax.nexus.path.agent.Agent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
