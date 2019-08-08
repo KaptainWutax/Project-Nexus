@@ -16,10 +16,20 @@ public class Agents {
     public static Agent LINEAR_EAST = new AgentLinear(EAST);
     public static Agent LINEAR_WEST = new AgentLinear(WEST);
 
-    public static Agent DIAGONAL_NORTH_EAST = new AgentDiagonal(NORTH, EAST);
-    public static Agent DIAGONAL_NORTH_WEST = new AgentDiagonal(NORTH, WEST);
-    public static Agent DIAGONAL_SOUTH_EAST = new AgentDiagonal(SOUTH, EAST);
-    public static Agent DIAGONAL_SOUTH_WEST = new AgentDiagonal(SOUTH, WEST);
+    public static Agent LINEAR_SWIM_NORTH = new AgentLinearSwim(NORTH);
+    public static Agent LINEAR_SWIM_SOUTH = new AgentLinearSwim(SOUTH);
+    public static Agent LINEAR_SWIM_EAST = new AgentLinearSwim(EAST);
+    public static Agent LINEAR_SWIM_WEST = new AgentLinearSwim(WEST);
+
+    public static Agent DIAGONAL_NORTH_EAST = new AgentDiagonalSwim(NORTH, EAST);
+    public static Agent DIAGONAL_NORTH_WEST = new AgentDiagonalSwim(NORTH, WEST);
+    public static Agent DIAGONAL_SOUTH_EAST = new AgentDiagonalSwim(SOUTH, EAST);
+    public static Agent DIAGONAL_SOUTH_WEST = new AgentDiagonalSwim(SOUTH, WEST);
+
+    public static Agent DIAGONAL_SWIM_NORTH_EAST = new AgentDiagonal(NORTH, EAST);
+    public static Agent DIAGONAL_SWIM_NORTH_WEST = new AgentDiagonal(NORTH, WEST);
+    public static Agent DIAGONAL_SWIM_SOUTH_EAST = new AgentDiagonal(SOUTH, EAST);
+    public static Agent DIAGONAL_SWIM_SOUTH_WEST = new AgentDiagonal(SOUTH, WEST);
 
     public static Agent STEP_NORTH = new AgentStep(NORTH);
     public static Agent STEP_SOUTH = new AgentStep(SOUTH);
@@ -38,6 +48,16 @@ public class Agents {
         AGENTS.add(LINEAR_SOUTH);
         AGENTS.add(LINEAR_EAST);
         AGENTS.add(LINEAR_WEST);
+
+        AGENTS.add(LINEAR_SWIM_NORTH);
+        AGENTS.add(LINEAR_SWIM_SOUTH);
+        AGENTS.add(LINEAR_SWIM_EAST);
+        AGENTS.add(LINEAR_SWIM_WEST);
+
+        AGENTS.add(DIAGONAL_SWIM_NORTH_EAST);
+        AGENTS.add(DIAGONAL_SWIM_NORTH_WEST);
+        AGENTS.add(DIAGONAL_SWIM_SOUTH_EAST);
+        AGENTS.add(DIAGONAL_SWIM_SOUTH_WEST);
 
         AGENTS.add(DIAGONAL_NORTH_EAST);
         AGENTS.add(DIAGONAL_NORTH_WEST);
