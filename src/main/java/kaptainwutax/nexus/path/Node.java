@@ -30,4 +30,9 @@ public class Node {
     public String toString() {
         return "Node [" + pos.getX() + ", " + pos.getY() + ", " + pos.getZ() + "] with " + distance + ", " + heuristic + ", " + totalCost;
     }
+
+    @Override
+    public int hashCode() {
+        return this.pos.hashCode();
+    }
 }
