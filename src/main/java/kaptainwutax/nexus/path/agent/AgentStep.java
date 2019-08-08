@@ -3,6 +3,7 @@ package kaptainwutax.nexus.path.agent;
 import kaptainwutax.nexus.init.Nodes;
 import kaptainwutax.nexus.init.Speeds;
 import kaptainwutax.nexus.path.Node;
+import net.minecraft.client.util.math.Vector4f;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
@@ -32,6 +33,11 @@ public class AgentStep extends Agent {
         }
 
         return nodes;
+    }
+
+    @Override
+    public Vector4f getRenderColor() {
+        return new Vector4f(0.0f, 1.0f, 0.1f, 1.0f);
     }
 
     private boolean isValidPos(World world, BlockPos pos, int spaces) {

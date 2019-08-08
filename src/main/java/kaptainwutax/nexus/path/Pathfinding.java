@@ -45,7 +45,13 @@ public class Pathfinding {
                 Line line = new Line();
                 line.pos1 = toVec3f(n.getPos());
                 line.pos2 = toVec3f(n.parent.getPos());
+
                 line.color = new Vector4f(0f, 1f, 1f, 1);
+
+                if(n.agent != null) {
+                    line.color = n.agent.getRenderColor();
+                }
+
                 PathRenderer.LINES.add(line);
             }
         });

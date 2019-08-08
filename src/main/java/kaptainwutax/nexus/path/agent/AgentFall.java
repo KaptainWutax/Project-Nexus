@@ -3,6 +3,7 @@ package kaptainwutax.nexus.path.agent;
 import kaptainwutax.nexus.init.Nodes;
 import kaptainwutax.nexus.init.Speeds;
 import kaptainwutax.nexus.path.Node;
+import net.minecraft.client.util.math.Vector4f;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
@@ -33,6 +34,8 @@ public class AgentFall extends Agent {
             while(Nodes.GO_THROUGH_BLOCKS.contains(world.getBlockState(offsetPos).getBlock())) {
                 depth++;
                 offsetPos = offsetPos.down();
+                
+                if(offsetPos.getY() < 0)return nodes;
             }
 
             offsetPos = offsetPos.up();
@@ -43,6 +46,11 @@ public class AgentFall extends Agent {
         }
 
         return nodes;
+    }
+
+    @Override
+    public Vector4f getRenderColor() {
+        return new Vector4f(1.0f, 0.0f, 0.0f, 1.0f);
     }
 
     private boolean isValidPos(World world, BlockPos pos, int spaces) {
