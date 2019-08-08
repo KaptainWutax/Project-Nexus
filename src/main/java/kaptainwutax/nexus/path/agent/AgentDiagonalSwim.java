@@ -30,7 +30,7 @@ public class AgentDiagonalSwim extends Agent {
         if(!this.isValidPos(world, pos))return nodes;
 
         Node node = new Node(pos, this);
-        node.pathCost = currentNode.pathCost + Math.sqrt(2) * (Speeds.SPRINT_JUMP / Speeds.WALK) * 2.0d;
+        node.pathCost = currentNode.pathCost + Math.sqrt(2) * (Speeds.SPRINT_JUMP / Speeds.SPRINT);
         nodes.add(node);
 
         return nodes;
@@ -42,9 +42,9 @@ public class AgentDiagonalSwim extends Agent {
     }
 
     private boolean isValidPos(World world, BlockPos pos) {
+        if(world.getBlockState(pos.down()).getBlock() != Blocks.WATER)return false;
         if(!Nodes.GO_THROUGH_BLOCKS.contains(world.getBlockState(pos).getBlock()))return false;
         if(!Nodes.GO_THROUGH_BLOCKS.contains(world.getBlockState(pos.up()).getBlock()))return false;
-        if(world.getBlockState(pos.down()).getBlock() != Blocks.WATER)return false;
         if(!Nodes.GO_THROUGH_BLOCKS.contains(world.getBlockState(pos.offset(this.opposite(this.direction1))).getBlock()))return false;
         if(!Nodes.GO_THROUGH_BLOCKS.contains(world.getBlockState(pos.offset(this.opposite(this.direction2))).getBlock()))return false;
         if(!Nodes.GO_THROUGH_BLOCKS.contains(world.getBlockState(pos.up().offset(this.opposite(this.direction1))).getBlock()))return false;

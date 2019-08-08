@@ -29,7 +29,7 @@ public class AgentLinearSwim extends Agent {
 
         Node node = new Node(pos, this);
         //TODO: This is just an estimate. Needs proper testing.
-        node.pathCost = currentNode.pathCost + (Speeds.SPRINT_JUMP / Speeds.WALK) * 2.0d;
+        node.pathCost = currentNode.pathCost + (Speeds.SPRINT_JUMP / Speeds.SPRINT);
         nodes.add(node);
 
         return nodes;
@@ -41,9 +41,9 @@ public class AgentLinearSwim extends Agent {
     }
 
     private boolean isValidPos(World world, BlockPos pos) {
+        if(world.getBlockState(pos.down()).getBlock() != Blocks.WATER)return false;
         if(!Nodes.GO_THROUGH_BLOCKS.contains(world.getBlockState(pos).getBlock()))return false;
         if(!Nodes.GO_THROUGH_BLOCKS.contains(world.getBlockState(pos.up()).getBlock()))return false;
-        if(world.getBlockState(pos.down()).getBlock() != Blocks.WATER)return false;
         return true;
     }
 
