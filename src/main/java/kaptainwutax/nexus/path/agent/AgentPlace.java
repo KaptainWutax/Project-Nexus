@@ -32,7 +32,7 @@ public class AgentPlace extends Agent {
 
         for(Direction direction: DIRECTIONS) {
             if(this.isValidPosSide(world, pos.offset(direction))) {
-                Node node = new Node(pos, this);
+                Node node = new Node(pos.offset(direction), this);
                 //TODO: This is just an estimate. Needs proper testing.
                 node.pathCost = currentNode.pathCost + (Speeds.SPRINT_JUMP / Speeds.WALK) * 2.0d;
                 nodes.add(node);
