@@ -6,7 +6,8 @@
   ],
   "client": [
     "MixinClientPlayerEntity",
-    "MixinWorldRenderer"
+    "MixinWorldRenderer",
+    "MixinWorldChunk"
   ],
   "injectors": {
     "defaultRequire": 1

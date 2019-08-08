@@ -1,25 +1,31 @@
 package kaptainwutax.nexus.path;
 
+import kaptainwutax.nexus.path.agent.Agent;
 import net.minecraft.util.math.BlockPos;
 
 public class Node {
 
+    public Agent agent;
     public Node parent;
 
-    public double distance;
-    public double heuristic;
+    public double pathCost;
     public double totalCost;
 
     private BlockPos pos;
 
-    public Node(BlockPos pos) {
+    public Node(BlockPos pos, Agent agent) {
         this.pos = pos;
+        this.agent = agent;
     }
 
     //TODO: Fix this shit.
     @Override
     public boolean equals(Object obj) {
-        return pos.equals(((Node)obj).getPos());
+        if(obj == this)return true;
+        if(obj == null)return false;
+        if(obj.getClass() != Node.class)return false;
+        Node node = (Node)obj;
+        return node.pos.equals(this.pos);
     }
 
     public BlockPos getPos() {
@@ -28,7 +34,7 @@ public class Node {
 
     @Override
     public String toString() {
-        return "Node [" + pos.getX() + ", " + pos.getY() + ", " + pos.getZ() + "] with " + distance + ", " + heuristic + ", " + totalCost;
+        return "Node [" + pos.getX() + ", " + pos.getY() + ", " + pos.getZ() + "] with " + pathCost + ", " + totalCost;
     }
 
     @Override
