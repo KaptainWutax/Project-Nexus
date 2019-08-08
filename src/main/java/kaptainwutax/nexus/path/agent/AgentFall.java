@@ -34,7 +34,7 @@ public class AgentFall extends Agent {
             while(Nodes.GO_THROUGH_BLOCKS.contains(world.getBlockState(offsetPos).getBlock())) {
                 depth++;
                 offsetPos = offsetPos.down();
-                
+
                 if(offsetPos.getY() < 0)return nodes;
             }
 

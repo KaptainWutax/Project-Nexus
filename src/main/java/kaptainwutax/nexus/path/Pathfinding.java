@@ -64,7 +64,7 @@ public class Pathfinding {
     }
 
     public void findPath() {
-        if(start != null && end != null)this.findPath(start.add(0 ,0 ,0), end.add(0 ,0 ,0));
+        if(start != null && end != null)this.findPath(start.add(0, 0, 0), end.add(0, 0, 0));
     }
 
     public void findPath(BlockPos start, BlockPos end) {

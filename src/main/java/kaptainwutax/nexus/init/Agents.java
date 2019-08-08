@@ -31,6 +31,8 @@ public class Agents {
     public static Agent FALL_EAST = new AgentFall(EAST);
     public static Agent FALL_WEST = new AgentFall(WEST);
 
+    public static Agent PLACE = new AgentPlace();
+
     static {
         AGENTS.add(LINEAR_NORTH);
         AGENTS.add(LINEAR_SOUTH);
@@ -51,6 +53,8 @@ public class Agents {
         AGENTS.add(FALL_SOUTH);
         AGENTS.add(FALL_EAST);
         AGENTS.add(FALL_WEST);
+
+        AGENTS.add(PLACE);
     }
 
 }
