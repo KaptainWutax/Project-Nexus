@@ -54,7 +54,7 @@ public class Agents {
         AGENTS.add(FALL_EAST);
         AGENTS.add(FALL_WEST);
 
-        AGENTS.add(PLACE);
+        //AGENTS.add(PLACE);
     }
 
 }
