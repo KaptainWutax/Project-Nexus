@@ -12,7 +12,7 @@ public class MixinClientPlayerEntity {
 
     @Inject(at = @At("HEAD"), method = "tick")
     public void tick(CallbackInfo ci) {
-        Nexus.tick();
+        Nexus.getInstance().tick();
     }
 
 }

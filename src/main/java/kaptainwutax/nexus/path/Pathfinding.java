@@ -2,6 +2,7 @@ package kaptainwutax.nexus.path;
 
 import kaptainwutax.nexus.PathRenderer;
 import kaptainwutax.nexus.init.Agents;
+import kaptainwutax.nexus.init.Speeds;
 import kaptainwutax.nexus.path.agent.Agent;
 import kaptainwutax.nexus.utility.Line;
 import net.minecraft.client.MinecraftClient;
@@ -82,6 +83,20 @@ public class Pathfinding {
             OPEN.remove(currentNode);
             CLOSED.add(currentNode);
 
+            if(currentNode.parent != null) {
+                Line line = new Line();
+                line.pos1 = toVec3f(currentNode.getPos());
+                line.pos2 = toVec3f(currentNode.parent.getPos());
+
+                line.color = new Vector4f(1.0f, 1.0f, 1.0f, 1.0f);
+
+                if(currentNode.agent != null) {
+                    line.color = currentNode.agent.getRenderColor();
+                }
+
+                PathRenderer.LINES.add(line);
+            }
+
             if(currentNode.getPos().equals(TARGET.getPos())) {
                 PATH.add(currentNode);
 
@@ -96,7 +111,7 @@ public class Pathfinding {
             for(Agent agent: Agents.AGENTS) {
                 for(Node child: agent.getNodes(world, currentNode)) {
                     double pathCost = child.pathCost;
-                    double totalCost = pathCost + Math.sqrt(TARGET.getPos().getSquaredDistance(child.getPos()));
+                    double totalCost = pathCost + Math.sqrt(TARGET.getPos().getSquaredDistance(child.getPos())) * Speeds.SPRINT_JUMP;
 
                     if(CLOSED.contains(child))continue;
 
@@ -110,7 +125,7 @@ public class Pathfinding {
                         existingNode.parent = currentNode;
                         existingNode.pathCost = pathCost;
                         existingNode.agent = child.agent;
-                        existingNode.totalCost = existingNode.pathCost + Math.sqrt(TARGET.getPos().getSquaredDistance(existingNode.getPos()));
+                        existingNode.totalCost = existingNode.pathCost + Math.sqrt(TARGET.getPos().getSquaredDistance(existingNode.getPos())) * Speeds.SPRINT_JUMP;
                     }
                 }
             }
