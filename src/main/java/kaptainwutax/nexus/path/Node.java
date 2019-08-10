@@ -18,7 +18,6 @@ public class Node {
         this.agent = agent;
     }
 
-    //TODO: Fix this shit.
     @Override
     public boolean equals(Object obj) {
         if(obj == this)return true;
