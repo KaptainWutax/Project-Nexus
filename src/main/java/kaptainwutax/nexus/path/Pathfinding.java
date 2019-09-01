@@ -2,13 +2,13 @@ package kaptainwutax.nexus.path;
 
 import kaptainwutax.nexus.PathRenderer;
 import kaptainwutax.nexus.init.Agents;
-import kaptainwutax.nexus.init.Speeds;
 import kaptainwutax.nexus.path.agent.Agent;
 import kaptainwutax.nexus.utility.Line;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.client.util.math.Vector4f;
 import net.minecraft.client.world.ClientWorld;
+import net.minecraft.text.LiteralText;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.ArrayList;
@@ -88,13 +88,22 @@ public class Pathfinding {
                 line.pos1 = toVec3f(currentNode.getPos());
                 line.pos2 = toVec3f(currentNode.parent.getPos());
 
-                line.color = new Vector4f(1.0f, 1.0f, 1.0f, 1.0f);
+                line.color = new Vector4f(1.0f, 1.0f, 1.0f, 0.2f);
 
                 if(currentNode.agent != null) {
-                    line.color = currentNode.agent.getRenderColor();
+                    Vector4f color = currentNode.agent.getRenderColor();
+                    color.set(color.getX() * 0.3f, color.getY() * 0.3f, color.getZ() * 0.3f, 0.2f);
+                    line.color = color;
                 }
 
+                //Tab this out to remove pathfinding progress rendering so it only shows the final path.
                 PathRenderer.LINES.add(line);
+
+                //If you press right click, it resets the pathfinding. Useful if you hit a stupid path.
+                if(MinecraftClient.getInstance().options.keyUse.isPressed()) {
+                    PathRenderer.LINES.clear();
+                    return;
+                }
             }
 
             if(currentNode.getPos().equals(TARGET.getPos())) {
@@ -110,8 +119,9 @@ public class Pathfinding {
 
             for(Agent agent: Agents.AGENTS) {
                 for(Node child: agent.getNodes(world, currentNode)) {
-                    double pathCost = child.pathCost;
-                    double totalCost = pathCost + Math.sqrt(TARGET.getPos().getSquaredDistance(child.getPos())) * Speeds.SPRINT_JUMP;
+                    child.parent = currentNode;
+                    child.heuristic = (float)Math.sqrt(TARGET.getPos().getSquaredDistance(child.getPos()));
+                    child.totalCost = child.pathCost + child.heuristic;
 
                     if(CLOSED.contains(child))continue;
 
@@ -119,13 +129,9 @@ public class Pathfinding {
 
                     if(!OPEN.contains(child)) {
                         OPEN.add(child);
-                        child.parent = currentNode;
-                        child.totalCost = totalCost;
-                    } else if((existingNode = getNodeWithPos(OPEN, child.getPos())) != null && totalCost < existingNode.totalCost) {
-                        existingNode.parent = currentNode;
-                        existingNode.pathCost = pathCost;
-                        existingNode.agent = child.agent;
-                        existingNode.totalCost = existingNode.pathCost + Math.sqrt(TARGET.getPos().getSquaredDistance(existingNode.getPos())) * Speeds.SPRINT_JUMP;
+                    } else if((existingNode = getNodeWithPos(OPEN, child.getPos())) != null && child.pathCost < existingNode.pathCost) {
+                        OPEN.remove(existingNode);
+                        OPEN.add(child);
                     }
                 }
             }

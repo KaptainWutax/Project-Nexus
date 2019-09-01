@@ -29,7 +29,7 @@ public class AgentLinearSwim extends Agent {
 
         Node node = new Node(pos, this);
         //TODO: This is just an estimate. Needs proper testing.
-        node.pathCost = currentNode.pathCost + (Speeds.SPRINT_JUMP / Speeds.SPRINT);
+        node.pathCost = (float) (currentNode.pathCost + (Speeds.SPRINT_JUMP / Speeds.SPRINT));
         nodes.add(node);
 
         return nodes;

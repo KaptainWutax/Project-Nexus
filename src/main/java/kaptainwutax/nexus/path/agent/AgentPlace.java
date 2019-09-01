@@ -23,11 +23,10 @@ public class AgentPlace extends Agent {
 
         BlockPos pos = currentNode.getPos();
 
-        ///*
         if(this.isValidPosUp(world, pos)) {
             Node node = new Node(pos.up(), this);
             //TODO: This is just an estimate. Needs proper testing.
-            node.pathCost = currentNode.pathCost + (Speeds.SPRINT_JUMP / Speeds.WALK) * 2.0d;
+            node.pathCost = (float) (currentNode.pathCost + (Speeds.SPRINT_JUMP / Speeds.WALK) * 4.0d);
             nodes.add(node);
         }
 
@@ -35,10 +34,10 @@ public class AgentPlace extends Agent {
             if(this.isValidPosSide(world, pos.offset(direction))) {
                 Node node = new Node(pos.offset(direction), this);
                 //TODO: This is just an estimate. Needs proper testing.
-                node.pathCost = currentNode.pathCost + (Speeds.SPRINT_JUMP / Speeds.WALK) * 3.0d;
+                node.pathCost = (float) (currentNode.pathCost + (Speeds.SPRINT_JUMP / Speeds.WALK) * 3.0d);
                 nodes.add(node);
             }
-        }//*/
+        }
 
         return nodes;
     }

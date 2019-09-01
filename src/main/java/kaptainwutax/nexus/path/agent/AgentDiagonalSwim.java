@@ -30,7 +30,7 @@ public class AgentDiagonalSwim extends Agent {
         if(!this.isValidPos(world, pos))return nodes;
 
         Node node = new Node(pos, this);
-        node.pathCost = currentNode.pathCost + Math.sqrt(2) * (Speeds.SPRINT_JUMP / Speeds.SPRINT);
+        node.pathCost = (float) (currentNode.pathCost + Math.sqrt(2) * (Speeds.SPRINT_JUMP / Speeds.SPRINT));
         nodes.add(node);
 
         return nodes;

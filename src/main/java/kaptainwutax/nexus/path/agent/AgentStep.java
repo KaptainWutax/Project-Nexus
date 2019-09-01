@@ -28,7 +28,7 @@ public class AgentStep extends Agent {
         if(isValidPos(world, pos, 3) &&
                 isValidPos(world, pos.offset(this.direction).up(), 2)) {
             Node node = new Node(pos.offset(this.direction).up(), this);
-            node.pathCost = currentNode.pathCost + Math.sqrt(2) * (Speeds.SPRINT_JUMP / Speeds.STAIR_STEP_UP);
+            node.pathCost = (float) (currentNode.pathCost + Math.sqrt(2) * (Speeds.SPRINT_JUMP / Speeds.STAIR_STEP_UP));
             nodes.add(node);
         }
 

@@ -41,7 +41,7 @@ public class AgentFall extends Agent {
             offsetPos = offsetPos.up();
 
             Node node = new Node(offsetPos, this);
-            node.pathCost = currentNode.pathCost + Math.sqrt(2) * (Speeds.SPRINT_JUMP / Speeds.STAIR_STEP_DOWN) + 0.1d * depth;
+            node.pathCost = (float) (currentNode.pathCost + Math.sqrt(2) * (Speeds.SPRINT_JUMP / Speeds.STAIR_STEP_DOWN) + 0.1d * depth);
             nodes.add(node);
         }
 

@@ -28,7 +28,7 @@ public class AgentDiagonal extends Agent {
         if(!this.isValidPos(world, pos))return nodes;
 
         Node node = new Node(pos, this);
-        node.pathCost = currentNode.pathCost + Math.sqrt(2);
+        node.pathCost = (float) (currentNode.pathCost + Math.sqrt(2));
         nodes.add(node);
 
         return nodes;

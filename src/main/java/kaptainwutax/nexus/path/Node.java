@@ -8,8 +8,9 @@ public class Node {
     public Agent agent;
     public Node parent;
 
-    public double pathCost;
-    public double totalCost;
+    public float pathCost;
+    public float totalCost;
+    public float heuristic;
 
     private BlockPos pos;
 
