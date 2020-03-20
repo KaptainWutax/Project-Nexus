@@ -10,7 +10,7 @@ public abstract class Task {
         if(tick == 0) {
             this.start();
         } else {
-            this.update(Time.DELTA);
+            this.update(Time.DELTA_TIME);
         }
 
         this.tick++;

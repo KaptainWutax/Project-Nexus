@@ -1,12 +1,18 @@
 package kaptainwutax.nexus;
 
-import kaptainwutax.nexus.path.Pathfinding;
+import kaptainwutax.nexus.path.PathFinder;
+import kaptainwutax.nexus.path.player.BasePlayerPathFinder;
 import kaptainwutax.nexus.utility.Time;
+import kaptainwutax.nexus.world.chunk.FastWorld;
 import net.fabricmc.api.ClientModInitializer;
+import net.minecraft.client.MinecraftClient;
 
 public class Nexus implements ClientModInitializer {
 
 	private static Nexus INSTANCE = new Nexus();
+
+	public FastWorld world = new FastWorld();
+	public BasePlayerPathFinder pathFinder = new BasePlayerPathFinder(this.world);
 
 	public static Nexus getInstance() {
 		return INSTANCE;
@@ -14,12 +20,15 @@ public class Nexus implements ClientModInitializer {
 
 	@Override
 	public void onInitializeClient() {
-		System.out.println("[Project-Nexus] Hello world!");
 	}
 
 	public void tick() {
 		Time.updateTime();
-		Pathfinding.tick();
+		this.pathFinder.update();
+
+		if(MinecraftClient.getInstance().player != null) {
+			this.world.tick(MinecraftClient.getInstance().player.getBlockPos());
+		}
 	}
 
 }

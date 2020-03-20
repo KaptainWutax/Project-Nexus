@@ -16,7 +16,7 @@
   "license": "CC0-1.0",
   "icon": "assets/nexus/icon.png",
 
-  "environment": "*",
+  "environment": "client",
   "entrypoints": {
     "client": [
       "kaptainwutax.nexus.Nexus"

@@ -1,6 +1,6 @@
 package kaptainwutax.nexus.mixin;
 
-import kaptainwutax.nexus.path.Pathfinding;
+import kaptainwutax.nexus.Nexus;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -19,23 +19,22 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class MixinWorldChunk {
 
     @Shadow @Final private World world;
-    @Shadow @Final private ChunkPos pos;
-    @Shadow @Final private ChunkSection[] sections;
-    @Shadow @Final public static ChunkSection EMPTY_SECTION;
 
     @Inject(at = @At("HEAD"), method = "setBlockState")
-    public void setBlockState(BlockPos pos, BlockState state, boolean flag, CallbackInfoReturnable cir) {
+    public void setBlockState(BlockPos pos, BlockState state, boolean flag, CallbackInfoReturnable<Boolean> cir) {
         if(!this.world.isClient)return;
 
-        if(state.getBlock() == Blocks.DIAMOND_BLOCK) {
-            Pathfinding.start = pos.up();
-            System.out.println("Set starting point.");
-        } else if(state.getBlock() == Blocks.GOLD_BLOCK) {
-            Pathfinding.end = pos.up();
-            System.out.println("Set ending point.");
-        }
+        Nexus.getInstance().world.setBlockState(pos, state);
 
-        return;
+        if(state.getBlock() == Blocks.DIAMOND_BLOCK) {
+            if(Nexus.getInstance().pathFinder.setStart(pos.up())) {
+                System.out.println("Set starting point.");
+            }
+        } else if(state.getBlock() == Blocks.GOLD_BLOCK) {
+            if(Nexus.getInstance().pathFinder.setEnd(pos.up())) {
+                System.out.println("Set ending point.");
+            }
+        }
     }
 
 }

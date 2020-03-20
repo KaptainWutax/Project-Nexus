@@ -5,9 +5,11 @@
   "mixins": [
   ],
   "client": [
+    "ClientPlayNetworkHandlerMixin",
     "MixinClientPlayerEntity",
-    "MixinWorldRenderer",
-    "MixinWorldChunk"
+    "MixinWorldChunk",
+    "MixinGameRenderer",
+    "MixinClientWorld"
   ],
   "injectors": {
     "defaultRequire": 1

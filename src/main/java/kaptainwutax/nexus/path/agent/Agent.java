@@ -1,15 +1,22 @@
 package kaptainwutax.nexus.path.agent;
 
 import kaptainwutax.nexus.path.Node;
-import net.minecraft.client.util.math.Vector4f;
-import net.minecraft.world.World;
+import kaptainwutax.nexus.utility.Color;
+import kaptainwutax.nexus.world.chunk.FastWorld;
+import net.minecraft.entity.Entity;
 
-import java.util.List;
+import java.util.Set;
 
-public abstract class Agent {
+public abstract class Agent<T extends Entity> {
 
-    public abstract List<Node> getNodes(World world, Node currentNode);
+    public abstract Set<Node> getNextNodes(FastWorld world, Node currentNode);
 
-    public abstract Vector4f getRenderColor();
+    public abstract PathResult pathToNode(T entity, Node targetNode);
+
+    public abstract Color getRenderColor();
+
+    public enum PathResult {
+        IN_PROGRESS, COMPLETED, ERRORED
+    }
 
 }
