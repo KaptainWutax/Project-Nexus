@@ -1,14 +1,16 @@
 package kaptainwutax.nexus.profiler;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Profiler {
 
+	public static final Profiler GLOBAL = new Profiler();
+
 	protected String currentStep;
 	protected long startTime;
 
-	protected Map<String, Long> profile = new HashMap<>();
+	protected Map<String, Long> profile = new LinkedHashMap<>();
 	protected long totalTime = 0L;
 
 	public void end() {
@@ -47,15 +49,16 @@ public class Profiler {
 	public void printReport() {
 		System.out.format("============================================================\n");
 
-		for(Map.Entry<String, Long> e: this.profile.entrySet()) {
+		this.profile.entrySet().stream().sorted((e1, e2) -> (int)Math.signum(e2.getValue() - e1.getValue())).forEach(e -> {
 			System.out.format(e.getKey() + " took %d microseconds. %f%%\n", e.getValue() / 1000, e.getValue() * 100.0F / this.totalTime);
-		}
+		});
 
 		System.out.format("Profiling finished in %d microseconds.\n", this.totalTime / 1000);
 		System.out.format("============================================================\n");
 	}
 
 	public void clear() {
+		if(this.currentStep != null)this.end();
 		this.profile.clear();
 		this.totalTime = 0;
 	}

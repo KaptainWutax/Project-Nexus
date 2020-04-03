@@ -19,7 +19,7 @@ public class PathRenderer {
         RenderSystem.multMatrix(matrixStack.peek().getModel());
 
         GlStateManager.disableTexture();
-        GlStateManager.disableDepthTest();
+        //GlStateManager.disableDepthTest();
 
         for(Renderer renderer: RENDERERS) {
             renderer.render();

@@ -1,5 +1,6 @@
 package kaptainwutax.nexus.path.player;
 
+import kaptainwutax.nexus.path.KeyHelper;
 import kaptainwutax.nexus.path.Node;
 import kaptainwutax.nexus.path.PathFinder;
 import kaptainwutax.nexus.path.agent.*;
@@ -7,13 +8,10 @@ import kaptainwutax.nexus.world.chunk.FastWorld;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.util.math.BlockPos;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class BasePlayerPathFinder extends PathFinder {
 
-	protected static Set<Agent<?>> AGENTS = new HashSet<>();
 	private BlockPos start;
 	private BlockPos end;
 
@@ -21,9 +19,15 @@ public class BasePlayerPathFinder extends PathFinder {
 
 	private List<Node> path;
 	private int currentNodeId = 0;
+	private boolean firstPath = true;
 
 	public BasePlayerPathFinder(FastWorld world) {
-		super(world, AGENTS);
+		super(world);
+		this.agents.add(new AgentSimpleWalk());
+		this.agents.add(new AgentSimpleDWalk());
+		this.agents.add(new AgentStepUp());
+		this.agents.add(new AgentFall());
+		this.agents.add(new AgentPlaceBlock());
 	}
 
 	@Override
@@ -34,35 +38,47 @@ public class BasePlayerPathFinder extends PathFinder {
 			System.out.println("Finding path from " + this.start + " to " + this.end + ".");
 
 			THREAD_POOL.submit(() -> {
-				this.path = this.findPath(this.start, this.end);
-				this.isLookingForPath = false;
-				this.currentNodeId = 0;
+				try {
+					this.path = this.findPath(this.start, this.end);
+					this.isLookingForPath = false;
+					this.currentNodeId = 0;
 
-				MinecraftClient.getInstance().player.updatePosition(
-						this.path.get(0).pos.getX() + 0.5F,
-						this.path.get(0).pos.getY() + 0.5F,
-						this.path.get(0).pos.getZ() + 0.5F
-				);
+					if(this.firstPath) {
+						//MinecraftClient.getInstance().player.updatePosition(this.path.get(0).pos.getX() + 0.5F, this.path.get(0).pos.getY() + 0.5F, this.path.get(0).pos.getZ() + 0.5F);
+						this.firstPath = false;
+					}
+				} catch(Exception e) {
+					this.isLookingForPath = false;
+					e.printStackTrace();
+				}
 			});
 
 			this.isLookingForPath = true;
 			return;
 		}
 
-		if(this.currentNodeId + 1 == this.path.size()) {
-			this.path = null;
-			this.currentNodeId = 0;
+		KeyHelper.unpressAll();
+
+		if(this.currentNodeId + 1 >= this.path.size()) {
+			this.reset();
 			return;
 		}
 
-		Node currentNode = this.path.get(this.currentNodeId);
-		Agent.PathResult result = currentNode.agent.pathToNode(MinecraftClient.getInstance().player, this.path.get(this.currentNodeId + 1));
+		Node fromNode = this.path.get(this.currentNodeId);
+		Node toNode = this.path.get(this.currentNodeId + 1);
+
+		Agent.PathResult result =
+				Agent.PathResult.COMPLETED;
+		//toNode.agent.pathToNode(MinecraftClient.getInstance().player, fromNode, toNode);
 
 		if(result == Agent.PathResult.COMPLETED) {
 			this.currentNodeId++;
+			this.update();
 		} else if(result == Agent.PathResult.ERRORED) {
 			this.path = null;
+			this.start = MinecraftClient.getInstance().player.getBlockPos();
 			this.currentNodeId = 0;
+			KeyHelper.unpressAll();
 		}
 	}
 
@@ -82,14 +98,8 @@ public class BasePlayerPathFinder extends PathFinder {
 		this.start = null;
 		this.end = null;
 		this.path = null;
-	}
-
-	static {
-		AGENTS.add(new AgentSimpleWalk());
-		AGENTS.add(new AgentSimpleDWalk());
-		AGENTS.add(new AgentStepUp());
-		AGENTS.add(new AgentFall());
-		AGENTS.add(new AgentPlaceBlock());
+		this.currentNodeId = 0;
+		this.firstPath = true;
 	}
 
 }

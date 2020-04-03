@@ -10,9 +10,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(ClientPlayerEntity.class)
 public class MixinClientPlayerEntity {
 
-    @Inject(at = @At("HEAD"), method = "tick")
-    public void tick(CallbackInfo ci) {
+    //@Inject(method = "tickMovement", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/input/Input;tick(Z)V", shift = At.Shift.BEFORE))
+    //public void tickMovement(CallbackInfo ci) {
+    //    Nexus.getInstance().tick();
+    //}
+
+    @Inject(method = "tick", at = @At("HEAD"))
+    public void tickMovement(CallbackInfo ci) {
         Nexus.getInstance().tick();
     }
+
 
 }

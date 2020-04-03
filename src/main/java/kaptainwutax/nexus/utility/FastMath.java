@@ -21,6 +21,7 @@ public class FastMath {
 		int deltaY = p1.getY() - p2.getY();
 		int deltaZ = p1.getZ() - p2.getZ();
 		int squaredDistance = deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ;
+		if(squaredDistance >= MAX_TRIPLE_SUM_OF_SQUARES)return Math.sqrt(squaredDistance);
 		return INTEGER_SQRT_TABLE[squaredDistance];
 	}
 

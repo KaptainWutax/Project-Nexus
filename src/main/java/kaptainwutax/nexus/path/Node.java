@@ -45,7 +45,7 @@ public class Node implements Comparable<Node> {
         if(obj == null)return false;
         if(obj.getClass() != this.getClass())return false;
         Node node = (Node)obj;
-        return node.pos.equals(this.pos) && this.agent == node.agent;
+        return this.pos.equals(node.pos);
     }
 
     @Override

@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class FastWorld {
 
-	protected int renderDistance = 16;
+	protected int renderDistance = 52;
 	protected Map<Long, FastChunk> chunks = new HashMap<>();
 
 	public void tick(BlockPos playerPosition) {
